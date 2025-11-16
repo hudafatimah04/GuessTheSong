@@ -1,0 +1,269 @@
+html, body {
+  
+  margin: 0;
+  padding: 0;
+}
+
+/*.text-container {
+  z-index: 100;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  position: absolute;
+  top: 0;
+  left: 0;
+  justify-content: center;
+  align-items: center;
+  font-size: 96px;
+  color: white;
+  opacity: 0.8;
+  user-select: none;
+  text-shadow: 1px 1px rgba(0,0,0,0.1);
+}
+*/
+.text-container {
+  z-index: 100;
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  
+  /* center everything vertically and horizontally */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  
+  text-align: center;
+  user-select: none;
+  color: white;
+}
+
+/* title */
+.text-container h1 {
+   font-family: Papyrus, fantasy;  font-style: normal; font-variant: normal; font-weight: 700; 
+  font-size: 80px;
+  margin: 0;
+  color: #000;
+  opacity: 0.9;
+  
+  /*-webkit-text-stroke: 1.5px #bb1354; /* pastel pink outline */
+  /*text-shadow: 0 0 15px rgba(255,179,186,0.7);*/
+}
+
+/* tagline */
+.text-container .tagline {
+  font-family: "Book Antiqua", Palatino, "Palatino Linotype", "Palatino LT STD", Georgia, serif;  font-style: normal; font-variant: normal; font-weight: 400; line-height: 20px;
+  font-size: 22px;
+  margin-top: 60px;
+  color: #000;
+  opacity: 0.9;
+}
+
+
+                  
+
+/* button styling */
+.start-btn {
+   outline: 0;
+   margin-top: 40px;
+    font-family: "Book Antiqua", Palatino, "Palatino Linotype", "Palatino LT STD", Georgia, serif;  font-style: normal; font-variant: normal; font-weight: 700; 
+                    grid-gap: 8px;
+                    align-items: center;
+                    background-color: #ffc4f3;
+                    color: #000;
+                    border: 1px solid #000;
+                    border-radius: 4px;
+                    cursor: pointer;
+                    display: inline-flex;
+                    flex-shrink: 0;
+                    font-size: 20px;
+                    gap: 8px;
+                    justify-content: center;
+                    line-height: 1.5;
+                    overflow: hidden;
+                    padding: 12px 16px;
+                    text-decoration: none;
+                    text-overflow: ellipsis;
+                    transition: all .14s ease-out;
+                    white-space: nowrap;
+}
+
+/* hover effect (dreamy stars/glow) */
+.start-btn:hover {
+ box-shadow: 4px 4px 0 #000;
+                        transform: translate(-4px,-4px);
+}
+
+.start-btn:focus-visible{
+                        outline-offset: 1px;
+                    } 
+
+
+:root {
+--color-bg1: rgb(255, 255, 255);
+  
+  --color1: 255, 19, 150;
+  --color2: 251, 197, 248;
+  --color3: 227, 0, 71;
+  --color4: 255, 97, 118;
+  --color5:247, 171, 220;
+  --color-interactive:185, 0, 108;
+  --circle-size: 80%;
+  --blending: hard-light;
+  
+
+  }
+
+@keyframes moveInCircle {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes moveVertical {
+  0% {
+    transform: translateY(-50%);
+  }
+  50% {
+    transform: translateY(50%);
+  }
+  100% {
+    transform: translateY(-50%);
+  }
+}
+
+@keyframes moveHorizontal {
+  0% {
+    transform: translateX(-50%) translateY(-10%);
+  }
+  50% {
+    transform: translateX(50%) translateY(10%);
+  }
+  100% {
+    transform: translateX(-50%) translateY(-10%);
+  }
+}
+
+
+.gradient-bg {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  background: var(--color-bg1);
+  top: 0;
+  left: 0;
+
+  svg {
+    display: none;
+  }
+
+
+  .gradients-container {
+    filter: url(#goo) blur(40px) ;
+    width: 100%;
+    height: 100%;
+    z-index: -9999999999999;
+  }
+
+  .g1 {
+    position: absolute;
+    background: radial-gradient(circle at center, rgba(var(--color1), 0.8) 0, rgba(var(--color1), 0) 50%) no-repeat;
+    mix-blend-mode: var(--blending);
+
+    width: var(--circle-size);
+    height: var(--circle-size);
+    top: calc(50% - var(--circle-size) / 2);
+    left: calc(50% - var(--circle-size) / 2);
+
+    transform-origin: center center;
+    animation: moveVertical 30s ease infinite;
+
+    opacity: 1;
+  }
+
+  .g2 {
+    position: absolute;
+    background: radial-gradient(circle at center, rgba(var(--color2), 0.8) 0, rgba(var(--color2), 0) 50%) no-repeat;
+    mix-blend-mode: var(--blending);
+
+    width: var(--circle-size);
+    height: var(--circle-size);
+    top: calc(50% - var(--circle-size) / 2);
+    left: calc(50% - var(--circle-size) / 2);
+
+    transform-origin: calc(50% - 400px);
+    animation: moveInCircle 20s reverse infinite;
+
+    opacity: 1;
+  }
+
+  .g3 {
+    position: absolute;
+    background: radial-gradient(circle at center, rgba(var(--color3), 0.8) 0, rgba(var(--color3), 0) 50%) no-repeat;
+    mix-blend-mode: var(--blending);
+
+    width: var(--circle-size);
+    height: var(--circle-size);
+    top: calc(50% - var(--circle-size) / 2 + 200px);
+    left: calc(50% - var(--circle-size) / 2 - 500px);
+
+    transform-origin: calc(50% + 400px);
+    animation: moveInCircle 40s linear infinite;
+
+    opacity: 1;
+  }
+
+  .g4 {
+    position: absolute;
+    background: radial-gradient(circle at center, rgba(var(--color4), 0.8) 0, rgba(var(--color4), 0) 50%) no-repeat;
+    mix-blend-mode: var(--blending);
+
+    width: var(--circle-size);
+    height: var(--circle-size);
+    top: calc(50% - var(--circle-size) / 2);
+    left: calc(50% - var(--circle-size) / 2);
+
+    transform-origin: calc(50% - 200px);
+    animation: moveHorizontal 40s ease infinite;
+
+    opacity: 0.7;
+  }
+
+  .g5 {
+    position: absolute;
+    background: radial-gradient(circle at center, rgba(var(--color5), 0.8) 0, rgba(var(--color5), 0) 50%) no-repeat;
+    mix-blend-mode: var(--blending);
+
+    width: calc(var(--circle-size) * 2);
+    height: calc(var(--circle-size) * 2);
+    top: calc(50% - var(--circle-size));
+    left: calc(50% - var(--circle-size));
+
+    transform-origin: calc(50% - 800px) calc(50% + 200px);
+    animation: moveInCircle 20s ease infinite;
+
+    opacity: 1;
+  }
+
+  .interactive {
+    position: absolute;
+    background: radial-gradient(circle at center, rgba(var(--color-interactive), 0.8) 0, rgba(var(--color-interactive), 0) 50%) no-repeat;
+    mix-blend-mode: var(--blending);
+
+    width: 100%;
+    height: 100%;
+    top: -50%;
+    left: -50%;
+
+    opacity: 0.7;
+  }
+}

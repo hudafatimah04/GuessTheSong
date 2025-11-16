@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" href="/style.css">
+  <title>Guess the Song</title>
+  <style>
+    /* Layout Container */
+   
+    .gradient-bg {
+  width: 100vw;
+  height: 100vh;
+  position: fixed; /* keep it behind everything */
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  background: var(--color-bg1);
+  z-index: 0; /* not negative crazy numbers */
+}
+
+.game-container {
+  position: relative;
+  z-index: 10; /* above the background */
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  text-align: center;
+  padding-top: 60px;
+  color: #000;
+  background: transparent; /* ensure transparency */
+}
+
+.nav {
+  position: relative;
+  z-index: 20; /* always on top */
+}
+
+
+    /* Navbar */
+    .nav {
+      position: absolute;
+      top: 20px;
+      width: 90%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: "Book Antiqua", Palatino, serif;
+      color: #000;
+    }
+
+    .score {
+      font-weight: bold;
+      font-size: 20px;
+      background-color: rgba(255, 255, 255, 0.5);
+      padding: 6px 12px;
+      border-radius: 8px;
+    }
+
+    .home-btn {
+      font-family: "Book Antiqua", Palatino, serif;
+      font-weight: 700;
+      background-color: #ffc4f3;
+      border: 1px solid #000;
+      padding: 8px 16px;
+      border-radius: 6px;
+      text-decoration: none;
+      color: #000;
+      transition: all 0.2s ease;
+    }
+
+    .home-btn:hover {
+      box-shadow: 4px 4px 0 #000;
+      transform: translate(-4px, -4px);
+    }
+
+    /* Title */
+    h1 {
+      font-family: Papyrus, fantasy;
+      font-size: 60px;
+      margin-bottom: 20px;
+      color: #000;
+    }
+
+    /* Audio styling */
+    audio {
+      margin: 20px 0 30px 0;
+      width: 300px;
+      outline: none;
+      border-radius: 8px;
+      background: transparent;
+    }
+
+    /* Options styling */
+    .options {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 15px;
+      font-family: "Book Antiqua", Palatino, serif;
+    }
+
+    .option-btn {
+      font-family: "Book Antiqua", Palatino, serif;
+      font-weight: 700;
+      background-color: #ffc4f3;
+      color: #000;
+      border: 1px solid #000;
+      border-radius: 4px;
+      cursor: pointer;
+      padding: 10px 20px;
+      font-size: 18px;
+      transition: 0.2s ease;
+    }
+
+    .option-btn:hover {
+      box-shadow: 4px 4px 0 #000;
+      transform: translate(-3px, -3px);
+    }
+
+    /* Result text */
+    #result {
+      margin-top: 30px;
+      font-family: "Book Antiqua", Palatino, serif;
+      font-size: 22px;
+      font-weight: bold;
+      transition: 0.3s ease;
+    }
+
+    /* Correct / Wrong animations */
+    .correct {
+      
+      color: #007f00;
+      animation: pulse 0.5s ease;
+    }
+
+    .wrong {
+      
+      color: #c40000;
+      animation: shake 0.5s ease;
+    }
+
+    /* Next button */
+    #next-btn {
+      display: none;
+      margin-top: 5px;
+      font-family: "Book Antiqua", Palatino, serif;
+      background-color: #ffc4f3;
+      font-weight: bold;
+      border: 1px solid #000;
+      color: #000;
+      padding: 10px 20px;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: 0.2s ease;
+    }
+
+    #next-btn:hover {
+      box-shadow: 4px 4px 0 #000;
+      transform: translate(-4px, -4px);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Gradient background FIRST -->
+  <div class="gradient-bg">
+    <svg xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="goo">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
+          <feColorMatrix in="blur" mode="matrix" 
+            values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -8" result="goo" />
+          <feBlend in="SourceGraphic" in2="goo" />
+        </filter>
+      </defs>
+    </svg>
+
+    <div class="gradients-container">
+      <div class="g1"></div>
+      <div class="g2"></div>
+      <div class="g3"></div>
+      <div class="g4"></div>
+      <div class="g5"></div>
+      <div class="interactive"></div>
+    </div>
+  </div>
+
+  <!-- Navbar (score + home) -->
+  <div class="nav">
+    <div class="score">Score: <span id="score">0</span></div>
+    <a href="/" class="home-btn">Home</a>
+  </div>
+
+  <!-- Main Game Container -->
+  <div class="game-container">
+    <h1>Guess the Song!</h1>
+    <audio controls autoplay controlsList="nodownload" src="<%= correctSong.previewUrl %>"></audio>
+
+    <div class="options">
+      <% options.forEach(option => { %>
+        <button class="option-btn" onclick="checkAnswer('<%= option %>')"><%= option %></button>
+      <% }) %>
+    </div>
+
+    <p id="result"></p>
+    <a href="/game" id="next-btn">Next Song</a>
+  </div>
+
+  <script src="/script.js"></script>
+  <script>
+    
+    let score = parseInt(localStorage.getItem("score") || 0);
+    document.getElementById("score").textContent = score;
+
+    const correctAnswer = "<%= correctSong.trackName %>";
+
+    function checkAnswer(selected) {
+      const result = document.getElementById("result");
+      const next = document.getElementById("next-btn");
+
+      if (selected === correctAnswer) {
+        result.textContent = "Correct! You really know your music!";
+        result.className = "correct";
+        score++;
+      } else {
+        result.textContent = `Oops! The song was "${correctAnswer}".`;
+        result.className = "wrong";
+      }
+
+      localStorage.setItem("score", score);
+      document.getElementById("score").textContent = score;
+      next.style.display = "inline-block";
+
+      document.querySelectorAll(".option-btn").forEach(btn => btn.disabled = true);
+    }
+  </script>
+</body>
+</html>
